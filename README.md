@@ -17,8 +17,8 @@ A single-page, editorial-style portfolio built with plain HTML, CSS and JavaScri
 
 ## Run locally
 
-Open `index.html` in any browser.
+Open `public/index.html` in any browser.
 
 ## Deploy
 
-Hosted on Cloudflare Workers & Pages as a static site. Upload `index.html` as a new deployment, or connect this repository so every push redeploys automatically.
+Hosted on Cloudflare Workers as static assets. `wrangler.jsonc` points Cloudflare at the `public` folder, and every push to `main` redeploys the site automatically.
