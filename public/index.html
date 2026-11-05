@@ -73,16 +73,20 @@ body[data-scene="contact"] { --b1: #4FC7B0; --b2: #E58F7B; --b3: #7FB3E8; }
 
 /* Masthead bar */
 .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; padding-top: env(safe-area-inset-top, 0px); border-bottom: 1px solid var(--hair); }
-.bar .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; height: 58px; }
+.bar .wrap { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 16px; height: 58px; }
 .bar-name { font-weight: 700; font-size: 0.98rem; letter-spacing: -0.01em; text-decoration: none; justify-self: center; white-space: nowrap; }
 .issue { font-size: 0.84rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .bar-right { display: flex; align-items: center; gap: 4px; justify-self: end; min-width: 0; }
+.home-btn { display: grid; place-items: center; width: 34px; height: 30px; color: var(--fg); text-decoration: none; border-left: 1px solid var(--rule); padding-left: 12px; box-sizing: content-box; flex: none; }
+.home-btn svg { width: 18px; height: 18px; }
+.home-btn:hover { color: var(--accent); }
+
 nav { display: flex; gap: 18px; min-width: 0; overflow-x: auto; scrollbar-width: none; padding-right: 12px; }
 nav::-webkit-scrollbar { display: none; }
 nav a { font-size: 0.88rem; color: var(--muted); text-decoration: none; white-space: nowrap; padding-block: 4px; border-bottom: 1px solid transparent; transition: color .3s, border-color .3s; }
 nav a:hover { color: var(--fg); }
 nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
-.theme-btn { all: unset; cursor: pointer; font-size: 0.88rem; color: var(--fg); padding: 6px 0 6px 14px; border-left: 1px solid var(--rule); white-space: nowrap; }
+.theme-btn { all: unset; cursor: pointer; font-size: 0.88rem; color: var(--fg); padding: 6px 0 6px 12px; border-left: 1px solid var(--rule); white-space: nowrap; }
 .theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; }
 .progress i { display: block; height: 100%; background: var(--fg); transform-origin: left; transform: scaleX(var(--p)); }
@@ -264,8 +268,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   .caption-card { display: none; }
   .words .cap { display: block; grid-column: 2; color: var(--muted); font-size: 0.92rem; padding-bottom: 12px; margin-top: -2px; }
   .issue.left { display: none; }
-  .bar .wrap { grid-template-columns: auto 1fr; }
-  .bar-name { justify-self: start; opacity: 1; transform: none; }
+  .bar .wrap { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .cover { padding-block: 80px 40px; }
@@ -278,7 +281,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   .lines { grid-template-columns: 1fr; }
   .line + .line { padding-left: 0; border-left: 0; border-top: 1px solid var(--hair); }
   nav { gap: 14px; }
-  .bar-name { display: none; }
   .bar .wrap { grid-template-columns: 1fr; }
   .bar-right { justify-self: stretch; }
   nav { flex: 1; }
@@ -307,7 +309,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 <header class="bar glass">
   <div class="wrap">
     <span class="issue left" id="clock">New York</span>
-    <a class="bar-name" href="#top">Mohit Eedupuganti</a>
     <div class="bar-right">
       <nav aria-label="Sections">
         <a href="#projects" data-for="projects">Lookbook</a>
@@ -317,6 +318,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
         <a href="#contact" data-for="contact">Contact</a>
         <a href="projects/index.html">Random Projects</a>
       </nav>
+      <a class="home-btn" href="#top" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/></svg></a>
       <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark mode">Dark</button>
     </div>
   </div>
