@@ -260,6 +260,11 @@ footer a { text-decoration: none; }
   var navEl = document.querySelector("nav"), cur = navEl.querySelector(".on");
   if (cur && navEl.scrollWidth > navEl.clientWidth) navEl.scrollLeft = navEl.scrollWidth;
 
+  // Going back to the main site skips its navigation guide
+  document.querySelectorAll('a[href^="../index.html"]').forEach(function (a) {
+    a.addEventListener("click", function () { try { sessionStorage.setItem("skipIntro", "1"); } catch (e) {} });
+  });
+
   // Theme, shared with the main site
   var root = document.documentElement, tb = document.getElementById("theme-btn");
   function applyTheme(t) {

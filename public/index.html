@@ -179,6 +179,7 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .g4 { --g: radial-gradient(circle at 60% 40%, #7FB3E8, transparent 55%), radial-gradient(circle at 20% 80%, #9ED6A0, transparent 55%), #EAF0F5; }
 .g5 { --g: radial-gradient(circle at 25% 30%, #9ED6A0, transparent 55%), radial-gradient(circle at 75% 75%, #4FC7B0, transparent 55%), #EBF3EC; }
 .hs-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 24px; }
+.notes-col { display: grid; gap: 4px; text-align: right; }
 .note { font-size: 0.92rem; color: var(--muted); }
 .note a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--fg); }
 .note a:hover { color: var(--accent); border-color: var(--accent); }
@@ -293,6 +294,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 .static .spread { grid-template-columns: 1fr; }
 .static .contents, .static .big-folio, .static .hs-bar, .static .hint { display: none; }
 .static .hs-foot { margin-top: 32px; }
+.static .notes-col { text-align: left; }
 .static .pages { display: grid; gap: 52px; padding-left: 0; }
 .static .page { grid-area: auto; opacity: 1; transform: none; visibility: visible; }
 .static .hs-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 36px 28px; padding: 0 max(24px, env(safe-area-inset-right, 0px)) 0 max(24px, env(safe-area-inset-left, 0px)); transform: none !important; max-width: var(--max); margin: 0 auto; }
@@ -388,7 +390,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
           <p class="credits-line">AI / Dashboards</p>
         </article>
       </div>
-      <div class="wrap"><div class="hs-foot"><div class="hs-bar" aria-hidden="true"><i></i></div><p class="note">Curious about any of these? <a href="#contact">Contact me</a> for in-depth details.</p></div></div>
+      <div class="wrap"><div class="hs-foot"><div class="hs-bar" aria-hidden="true"><i></i></div><div class="notes-col"><p class="note">Curious about any of these? <a href="#contact">Contact me</a> for in-depth details.</p><p class="note">Looking for something more playful? Browse my <a href="projects/index.html">Random Projects</a>.</p></div></div></div>
     </div>
   </section>
 
@@ -664,6 +666,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   tick(); setInterval(tick, 15000);
 
   var veil = document.getElementById("intro"), seen = false, closeT;
+  // Skip the guide when arriving from another page of this site (e.g. Random Projects)
+  try {
+    if (sessionStorage.getItem("skipIntro") === "1") { seen = true; sessionStorage.removeItem("skipIntro"); }
+  } catch (e) {}
+  try { if (document.referrer && new URL(document.referrer).origin === location.origin && /\/projects\//.test(document.referrer)) seen = true; } catch (e) {}
   function closeIntro() {
     if (veil.hidden) return;
     clearTimeout(closeT);
