@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Random Projects - Mohit Eedupuganti</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<script>try { if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark"); } catch (e) {}</script>
 <meta name="description" content="Side quests by Mohit Eedupuganti, starting with Petal Link, a bouquet that folds itself into a scannable QR code.">
 <style>
 /* Layout: the same editorial issue, light only. A masthead bar, a section opener, an index of side quests, then each quest as a spread: notes on the left, a working glass stage on the right. */
@@ -20,9 +21,19 @@
   --hair: rgba(16, 26, 24, 0.09);
   --accent: #0B6B5A;
   --error: #B3402F;
+  --o1: #E58F7B; --o2: #9ED6A0; --o3: #F2C46D;
   --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --max: 1320px;
   color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #070D0C; --fg: #ECF1EF; --muted: #98A8A4;
+  --glass: rgba(255, 255, 255, 0.07); --glass-soft: rgba(255, 255, 255, 0.04); --glass-strong: rgba(255, 255, 255, 0.13);
+  --edge: rgba(255, 255, 255, 0.15);
+  --rule: rgba(255, 255, 255, 0.22); --hair: rgba(255, 255, 255, 0.09);
+  --accent: #63D2BA; --error: #F08A78;
+  --o1: #7A3426; --o2: #2F6B33; --o3: #8A5A12;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -39,15 +50,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 
 /* Color field */
 .field { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.66; animation: drift 26s ease-in-out infinite; }
-.o1 { width: 50vmax; height: 50vmax; left: -18vmax; top: -18vmax; background: #E58F7B; }
-.o2 { width: 44vmax; height: 44vmax; right: -16vmax; top: 14vh; background: #9ED6A0; animation-delay: -9s; }
-.o3 { width: 40vmax; height: 40vmax; left: 24vw; bottom: -24vmax; background: #F2C46D; animation-delay: -17s; }
+.orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.66; animation: drift 26s ease-in-out infinite; transition: background 1s ease; }
+.o1 { width: 50vmax; height: 50vmax; left: -18vmax; top: -18vmax; background: var(--o1); }
+.o2 { width: 44vmax; height: 44vmax; right: -16vmax; top: 14vh; background: var(--o2); animation-delay: -9s; }
+.o3 { width: 40vmax; height: 40vmax; left: 24vw; bottom: -24vmax; background: var(--o3); animation-delay: -17s; }
 @keyframes drift { 50% { transform: translate(3%, -4%) scale(1.06); } }
 
 /* Bar */
 .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; padding-top: env(safe-area-inset-top, 0px); border-bottom: 1px solid var(--hair); }
-.bar .wrap { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; height: 58px; }
+.bar .wrap { display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 16px; height: 58px; }
 .issue { font-size: 0.84rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .bar-name { font-weight: 700; font-size: 0.98rem; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; justify-self: center; }
 nav { display: flex; gap: 18px; justify-self: end; padding-right: 4px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
@@ -58,6 +69,9 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .home-btn { display: grid; place-items: center; width: 34px; height: 30px; color: var(--fg); text-decoration: none; border-left: 1px solid var(--rule); padding-left: 12px; box-sizing: content-box; flex: none; }
 .home-btn svg { width: 18px; height: 18px; }
 .home-btn:hover { color: var(--accent); }
+.theme-btn { all: unset; cursor: pointer; font-size: 0.88rem; color: var(--fg); padding: 6px 0 6px 12px; border-left: 1px solid var(--rule); white-space: nowrap; flex: none; }
+.theme-btn:hover { color: var(--accent); }
+.theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 
 /* Opener */
@@ -81,14 +95,14 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .quest-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 30px; }
 .quest-head h2 { font-size: clamp(2.4rem, 7vw, 5.6rem); letter-spacing: -0.045em; line-height: 0.88; text-transform: uppercase; }
 .spread { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
-.notes { display: grid; gap: 24px; min-width: 0; }
+.notes { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-width: 0; }
 .pull { font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.25; letter-spacing: -0.015em; }
 .steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; counter-reset: c; border-top: 1px solid var(--rule); padding-top: 16px; }
 .steps li { counter-increment: c; display: grid; grid-template-columns: 28px 1fr; gap: 8px; font-size: 0.95rem; color: var(--muted); }
 .steps li::before { content: counter(c, decimal-leading-zero); font-size: 0.72rem; padding-top: 3px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* Form */
-.panel { padding: 22px; display: grid; gap: 12px; background: var(--glass-soft); border-color: var(--rule); }
+.panel { padding: 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; background: var(--glass-soft); border-color: var(--rule); }
 .panel label { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .row { display: flex; gap: 0; border-bottom: 1px solid var(--fg); }
 .row input { flex: 1; min-width: 0; font: 400 1.1rem var(--font); padding: 10px 0; border: 0; background: transparent; color: var(--fg); }
@@ -104,14 +118,14 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 /* Stage */
 .stage-col { display: grid; gap: 14px; min-width: 0; scroll-margin-top: 80px; }
 .frame { padding: 16px; justify-self: stretch; }
-.stage { position: relative; width: 100%; max-width: 520px; margin: 0 auto; aspect-ratio: 1; background: #FBFCFB; overflow: hidden; }
+.stage { position: relative; width: 100%; max-width: 520px; margin: 0 auto; aspect-ratio: 1; background: #FBFCFB; overflow: hidden; color-scheme: light; }
 .stage * { position: absolute; }
 .caption { display: flex; justify-content: space-between; gap: 12px; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .bouquet-art { inset: 0; transition: opacity 0.6s ease, transform 0.6s ease; transform-origin: 50% 92%; }
 .bouquet-art.hidden { opacity: 0; transform: scale(0.72); pointer-events: none; }
 .stem { background: linear-gradient(#5FA77E, #2F6E4F); transform-origin: bottom center; border-radius: 3px; }
 .leaf { background: #7CC495; border-radius: 60% 40% 65% 35% / 55% 45% 60% 40%; opacity: 0.85; }
-.ribbon-bow { background: var(--fg); }
+.ribbon-bow { background: #101A18; }
 .petal { border-radius: 60% 40% 65% 35% / 55% 45% 60% 40%; will-change: left, top, width, height, transform;
   transition: left .85s cubic-bezier(.5,0,.25,1), top .85s cubic-bezier(.5,0,.25,1), width .85s cubic-bezier(.5,0,.25,1), height .85s cubic-bezier(.5,0,.25,1), border-radius .7s ease, transform .85s cubic-bezier(.5,0,.25,1), background-color .7s ease; }
 .petal.sway { animation: sway 5.5s ease-in-out infinite; }
@@ -132,12 +146,12 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 footer a { text-decoration: none; }
 
 @media (max-width: 900px) {
-  .intro, .spread { grid-template-columns: 1fr; }
+  .intro, .spread { grid-template-columns: minmax(0, 1fr); }
   .stage-col { order: -1; }
   .issue { display: none; }
 }
 @media (max-width: 760px) {
-  .bar .wrap { grid-template-columns: 1fr auto; }
+  .bar .wrap { grid-template-columns: minmax(0, 1fr) auto auto; }
   nav { justify-self: stretch; }
 }
 @media (max-width: 560px) {
@@ -168,6 +182,7 @@ footer a { text-decoration: none; }
       <a href="index.html" class="on" aria-current="page">Random Projects</a>
     </nav>
     <a class="home-btn" href="../index.html" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/></svg></a>
+    <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark mode">Dark</button>
   </div>
 </header>
 
@@ -243,6 +258,20 @@ footer a { text-decoration: none; }
   tick(); setInterval(tick, 15000);
   var navEl = document.querySelector("nav"), cur = navEl.querySelector(".on");
   if (cur && navEl.scrollWidth > navEl.clientWidth) navEl.scrollLeft = navEl.scrollWidth;
+
+  // Theme, shared with the main site
+  var root = document.documentElement, tb = document.getElementById("theme-btn");
+  function applyTheme(t) {
+    root.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+    tb.textContent = t === "dark" ? "Light" : "Dark";
+    tb.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+  var saved = null; try { saved = localStorage.getItem("theme"); } catch (e) {}
+  applyTheme(saved === "dark" ? "dark" : "light");
+  tb.addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(next); try { localStorage.setItem("theme", next); } catch (e) {}
+  });
 
   // Petal Link. Palette drawn from the ehmtoi color field.
   var PALETTE = ["#E58F7B", "#F2C46D", "#7FB3E8", "#4FC7B0", "#9ED6A0", "#E9A84A", "#C98BB9", "#6FA8DC", "#F0A27A", "#8FC7A8"];
