@@ -204,12 +204,12 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .words > li { display: grid; grid-template-columns: 40px 1fr; align-items: baseline; gap: 12px; border-top: 1px solid var(--hair); cursor: default; }
 .words > li:last-child { border-bottom: 1px solid var(--hair); }
 .words .no { font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-.words .w { font-size: clamp(2.4rem, 7.2vw, 6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.045em; line-height: 1; padding-block: 6px;
+.words .w { font-size: clamp(2rem, 5.6vw, 5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.045em; line-height: 1; padding-block: 6px;
   color: transparent; -webkit-text-stroke: 1px var(--rule); transition: color .45s ease, -webkit-text-stroke-color .45s ease, transform .45s ease; transform-origin: left center; }
 .words > li.on .w, .words > li:hover .w { color: var(--fg); -webkit-text-stroke-color: var(--fg); }
 .words > li.on .w { transform: translateX(10px); }
 .card-films { display: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
-.caption-card.is-film .card-films { display: grid; }
+.card-films.show { display: grid; }
 .cf { all: unset; cursor: pointer; display: block; padding: 4px; background: var(--glass-strong); border: 1px solid var(--edge); animation: popIn .55s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0ms); transition: transform .3s ease; }
 .cf img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
 .cf:hover, .cf:focus-visible { transform: translateY(-4px) rotate(-1.5deg); }
@@ -529,14 +529,14 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 <li class="poster"><figure><div class="poster-frame"><img src="films/kill-bill-vol-1.jpg" alt="Kill Bill: Vol. 1 poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Kill Bill: Vol. 1</b><small>2003 / Quentin Tarantino</small></figcaption></figure></li>
 <li class="poster"><figure><div class="poster-frame"><img src="films/slumdog-millionaire.jpg" alt="Slumdog Millionaire poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Slumdog Millionaire</b><small>2008 / Danny Boyle</small></figcaption></figure></li>
 <li class="poster"><figure><div class="poster-frame"><img src="films/everything-everywhere-all-at-once.jpg" alt="Everything Everywhere All at Once poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Everything Everywhere All at Once</b><small>2022 / Daniel Kwan, Daniel Scheinert</small></figcaption></figure></li></ul></li>
-          <li data-cap="The chemistry behind flavor, texture and why recipes work."><span class="no">05</span><span class="w">Food Science</span><span class="cap">The chemistry behind flavor, texture and why recipes work.</span></li>
+          <li data-cap="How food shapes culture, identity and the way people live. A few favorites:"><span class="no">05</span><span class="w">Food Anthropology</span><span class="cap">How food shapes culture, identity and the way people live. A few favorites below.</span><ul class="posters m-films" aria-label="Food anthropology favorites"><li class="poster"><figure><div class="poster-frame"><img src="food/parts-unknown.jpg" alt="Anthony Bourdain: Parts Unknown cover" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Anthony Bourdain: Parts Unknown</b><small>TV series / 2013 - 2018</small></figcaption></figure></li><li class="poster"><figure><div class="poster-frame"><img src="food/anthropology-of-food.jpg" alt="Anthropology of Food cover" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Anthropology of Food</b><small>Book / Johan Pottier</small></figcaption></figure></li><li class="poster"><figure><div class="poster-frame"><img src="food/no-reservations.jpg" alt="Anthony Bourdain: No Reservations cover" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Anthony Bourdain: No Reservations</b><small>TV series / 2005 - 2012</small></figcaption></figure></li></ul></li>
           <li data-cap="Worlds, systems and design that keep players coming back."><span class="no">06</span><span class="w">Video Games</span><span class="cap">Worlds, systems and design that keep players coming back.</span></li>
         </ol>
         <aside class="caption-card glass" aria-live="polite">
           <span class="cap-n" id="cap-n">No. 01 of 06</span>
           <h3 id="cap-t">Fashion</h3>
           <p id="cap-p">Style as design you wear. Silhouettes, fabrics and how a look comes together.</p>
-          <div class="card-films" aria-label="Favorite films">
+          <div class="card-films" data-for="Film" aria-label="Favorite films">
             <button type="button" class="cf" style="--d:0ms" data-film="Tokyo Story / 1953 / Yasujiro Ozu"><img src="films/tokyo-story.jpg" alt="Tokyo Story poster" width="480" height="720" loading="lazy" decoding="async"></button>
             <button type="button" class="cf" style="--d:55ms" data-film="Fantastic Mr. Fox / 2009 / Wes Anderson"><img src="films/fantastic-mr-fox.jpg" alt="Fantastic Mr. Fox poster" width="480" height="720" loading="lazy" decoding="async"></button>
             <button type="button" class="cf" style="--d:110ms" data-film="Perfect Days / 2023 / Wim Wenders"><img src="films/perfect-days.jpg" alt="Perfect Days poster" width="480" height="720" loading="lazy" decoding="async"></button>
@@ -544,6 +544,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
             <button type="button" class="cf" style="--d:220ms" data-film="Kill Bill: Vol. 1 / 2003 / Quentin Tarantino"><img src="films/kill-bill-vol-1.jpg" alt="Kill Bill: Vol. 1 poster" width="480" height="720" loading="lazy" decoding="async"></button>
             <button type="button" class="cf" style="--d:275ms" data-film="Slumdog Millionaire / 2008 / Danny Boyle"><img src="films/slumdog-millionaire.jpg" alt="Slumdog Millionaire poster" width="480" height="720" loading="lazy" decoding="async"></button>
             <button type="button" class="cf" style="--d:330ms" data-film="Everything Everywhere All at Once / 2022 / Daniel Kwan, Daniel Scheinert"><img src="films/everything-everywhere-all-at-once.jpg" alt="Everything Everywhere All at Once poster" width="480" height="720" loading="lazy" decoding="async"></button>
+          </div>
+          <div class="card-films" data-for="Food Anthropology" aria-label="Food anthropology favorites">
+            <button type="button" class="cf" style="--d:0ms" data-film="Anthony Bourdain: Parts Unknown / TV series / 2013 - 2018"><img src="food/parts-unknown.jpg" alt="Anthony Bourdain: Parts Unknown cover" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:55ms" data-film="Anthropology of Food / Book / Johan Pottier"><img src="food/anthropology-of-food.jpg" alt="Anthropology of Food cover" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:110ms" data-film="Anthony Bourdain: No Reservations / TV series / 2005 - 2012"><img src="food/no-reservations.jpg" alt="Anthony Bourdain: No Reservations cover" width="480" height="720" loading="lazy" decoding="async"></button>
           </div>
           <p class="film-now" id="film-now">Hover a poster</p>
         </aside>
@@ -656,7 +661,12 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     capN.textContent = "No. " + pad(i + 1) + " of " + pad(words.length);
     capT.textContent = words[i].querySelector(".w").textContent;
     capP.textContent = words[i].getAttribute("data-cap");
-    capCard.classList.toggle("is-film", words[i].querySelector(".w").textContent.trim() === "Film");
+    var nm = words[i].querySelector(".w").textContent.trim(), any = false;
+    Array.prototype.forEach.call(capCard.querySelectorAll(".card-films"), function (sh) {
+      var on = sh.getAttribute("data-for") === nm; sh.classList.toggle("show", on); if (on) any = true;
+    });
+    capCard.classList.toggle("is-film", any);
+    filmNow.textContent = nm === "Film" ? "Hover a poster" : "Hover a cover";
   }
   function frame() {
     ticking = false;
