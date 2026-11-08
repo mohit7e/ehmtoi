@@ -201,33 +201,34 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 /* Passions index */
 .index { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 40px; align-items: start; }
 .words { list-style: none; margin: 0; padding: 0; }
-.words li { display: grid; grid-template-columns: 40px 1fr; align-items: baseline; gap: 12px; border-top: 1px solid var(--hair); cursor: default; }
-.words li:last-child { border-bottom: 1px solid var(--hair); }
+.words > li { display: grid; grid-template-columns: 40px 1fr; align-items: baseline; gap: 12px; border-top: 1px solid var(--hair); cursor: default; }
+.words > li:last-child { border-bottom: 1px solid var(--hair); }
 .words .no { font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .words .w { font-size: clamp(2.4rem, 7.2vw, 6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.045em; line-height: 1; padding-block: 6px;
   color: transparent; -webkit-text-stroke: 1px var(--rule); transition: color .45s ease, -webkit-text-stroke-color .45s ease, transform .45s ease; transform-origin: left center; }
-.words li.on .w, .words li:hover .w { color: var(--fg); -webkit-text-stroke-color: var(--fg); }
-.words li.on .w { transform: translateX(10px); }
-.shelf { margin-top: 56px; display: grid; gap: 16px; }
-.shelf-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
-.posters { list-style: none; margin: 0; padding: 4px 0 8px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 18px; }
-.poster figure { margin: 0; display: grid; gap: 10px; }
-.poster-frame { padding: 6px; background: var(--glass); border: 1px solid var(--edge); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); transition: transform .35s ease, box-shadow .35s ease; }
+.words > li.on .w, .words > li:hover .w { color: var(--fg); -webkit-text-stroke-color: var(--fg); }
+.words > li.on .w { transform: translateX(10px); }
+.card-films { display: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
+.caption-card.is-film .card-films { display: grid; }
+.cf { all: unset; cursor: pointer; display: block; padding: 4px; background: var(--glass-strong); border: 1px solid var(--edge); animation: popIn .55s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0ms); transition: transform .3s ease; }
+.cf img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
+.cf:hover, .cf:focus-visible { transform: translateY(-4px) rotate(-1.5deg); }
+.cf:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@keyframes popIn { from { opacity: 0; transform: translateY(18px) scale(.9); } to { opacity: 1; transform: none; } }
+.film-now { display: none; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); min-height: 1.3em; }
+.caption-card.is-film .film-now { display: block; }
+.posters { list-style: none; margin: 0; padding: 4px 0 8px; display: none; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.posters::-webkit-scrollbar { display: none; }
+.poster { flex: 0 0 min(150px, 40vw); scroll-snap-align: start; }
+.poster figure { margin: 0; display: grid; gap: 8px; }
+.poster-frame { padding: 5px; background: var(--glass); border: 1px solid var(--edge); }
 .poster-frame img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
-.poster:hover .poster-frame { transform: translateY(-6px); box-shadow: 0 22px 40px -24px rgba(16, 26, 24, 0.45); }
-.poster figcaption { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 0 6px; line-height: 1.3; }
-.poster .pn { grid-row: span 2; font-size: 0.7rem; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
-.poster b { font-size: 0.88rem; font-weight: 600; }
+.poster figcaption { display: grid; line-height: 1.3; }
+.poster b { font-size: 0.85rem; font-weight: 600; }
 .poster small { font-size: 0.72rem; color: var(--muted); }
-@media (max-width: 1040px) {
-  .posters { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; }
-  .posters::-webkit-scrollbar { display: none; }
-  .poster { flex: 0 0 min(170px, 42vw); scroll-snap-align: start; }
-}
-.swipe { display: none; }
-@media (max-width: 1040px) { .swipe { display: inline; } }
-@media (prefers-reduced-motion: reduce) { .poster-frame { transition: none; } }
-.caption-card { position: sticky; top: 30vh; padding: 26px; display: grid; gap: 12px; }
+@media (max-width: 1040px) { .m-films { display: flex; grid-column: 2; padding-bottom: 16px; } }
+@media (prefers-reduced-motion: reduce) { .cf { animation: none; transition: none; } }
+.caption-card { position: sticky; top: max(84px, calc(50vh - 280px)); padding: 26px; display: grid; gap: 12px; }
 .caption-card .cap-n { font-size: 0.7rem; letter-spacing: 0.16em; color: var(--muted); }
 .caption-card h3 { font-size: 1.6rem; letter-spacing: -0.02em; }
 .caption-card p { color: var(--muted); }
@@ -521,7 +522,13 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
           <li data-cap="Style as design you wear. Silhouettes, fabrics and how a look comes together."><span class="no">01</span><span class="w">Fashion</span><span class="cap">Style as design you wear. Silhouettes, fabrics and how a look comes together.</span></li>
           <li data-cap="Galleries, color and composition. Anything that makes you look twice."><span class="no">02</span><span class="w">Art</span><span class="cap">Galleries, color and composition. Anything that makes you look twice.</span></li>
           <li data-cap="New cities, new food, and seeing how other places move people and goods."><span class="no">03</span><span class="w">Travel</span><span class="cap">New cities, new food, and seeing how other places move people and goods.</span></li>
-          <li data-cap="Stories told through framing, sound and pacing. A few favorites are on the shelf below."><span class="no">04</span><span class="w">Film</span><span class="cap">Stories told through framing, sound and pacing. A few favorites are on the shelf below.</span></li>
+          <li data-cap="Stories told through framing, sound and pacing. A few favorites:"><span class="no">04</span><span class="w">Film</span><span class="cap">Stories told through framing, sound and pacing. A few favorites below.</span><ul class="posters m-films" aria-label="Favorite films"><li class="poster"><figure><div class="poster-frame"><img src="films/tokyo-story.jpg" alt="Tokyo Story poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Tokyo Story</b><small>1953 / Yasujiro Ozu</small></figcaption></figure></li>
+<li class="poster"><figure><div class="poster-frame"><img src="films/fantastic-mr-fox.jpg" alt="Fantastic Mr. Fox poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Fantastic Mr. Fox</b><small>2009 / Wes Anderson</small></figcaption></figure></li>
+<li class="poster"><figure><div class="poster-frame"><img src="films/perfect-days.jpg" alt="Perfect Days poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Perfect Days</b><small>2023 / Wim Wenders</small></figcaption></figure></li>
+<li class="poster"><figure><div class="poster-frame"><img src="films/the-last-10-years.jpg" alt="The Last 10 Years poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>The Last 10 Years</b><small>2022 / Michihito Fujii</small></figcaption></figure></li>
+<li class="poster"><figure><div class="poster-frame"><img src="films/kill-bill-vol-1.jpg" alt="Kill Bill: Vol. 1 poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Kill Bill: Vol. 1</b><small>2003 / Quentin Tarantino</small></figcaption></figure></li>
+<li class="poster"><figure><div class="poster-frame"><img src="films/slumdog-millionaire.jpg" alt="Slumdog Millionaire poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Slumdog Millionaire</b><small>2008 / Danny Boyle</small></figcaption></figure></li>
+<li class="poster"><figure><div class="poster-frame"><img src="films/everything-everywhere-all-at-once.jpg" alt="Everything Everywhere All at Once poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Everything Everywhere All at Once</b><small>2022 / Daniel Kwan, Daniel Scheinert</small></figcaption></figure></li></ul></li>
           <li data-cap="The chemistry behind flavor, texture and why recipes work."><span class="no">05</span><span class="w">Food Science</span><span class="cap">The chemistry behind flavor, texture and why recipes work.</span></li>
           <li data-cap="Worlds, systems and design that keep players coming back."><span class="no">06</span><span class="w">Video Games</span><span class="cap">Worlds, systems and design that keep players coming back.</span></li>
         </ol>
@@ -529,19 +536,17 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
           <span class="cap-n" id="cap-n">No. 01 of 06</span>
           <h3 id="cap-t">Fashion</h3>
           <p id="cap-p">Style as design you wear. Silhouettes, fabrics and how a look comes together.</p>
+          <div class="card-films" aria-label="Favorite films">
+            <button type="button" class="cf" style="--d:0ms" data-film="Tokyo Story / 1953 / Yasujiro Ozu"><img src="films/tokyo-story.jpg" alt="Tokyo Story poster" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:55ms" data-film="Fantastic Mr. Fox / 2009 / Wes Anderson"><img src="films/fantastic-mr-fox.jpg" alt="Fantastic Mr. Fox poster" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:110ms" data-film="Perfect Days / 2023 / Wim Wenders"><img src="films/perfect-days.jpg" alt="Perfect Days poster" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:165ms" data-film="The Last 10 Years / 2022 / Michihito Fujii"><img src="films/the-last-10-years.jpg" alt="The Last 10 Years poster" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:220ms" data-film="Kill Bill: Vol. 1 / 2003 / Quentin Tarantino"><img src="films/kill-bill-vol-1.jpg" alt="Kill Bill: Vol. 1 poster" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:275ms" data-film="Slumdog Millionaire / 2008 / Danny Boyle"><img src="films/slumdog-millionaire.jpg" alt="Slumdog Millionaire poster" width="480" height="720" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf" style="--d:330ms" data-film="Everything Everywhere All at Once / 2022 / Daniel Kwan, Daniel Scheinert"><img src="films/everything-everywhere-all-at-once.jpg" alt="Everything Everywhere All at Once poster" width="480" height="720" loading="lazy" decoding="async"></button>
+          </div>
+          <p class="film-now" id="film-now">Hover a poster</p>
         </aside>
-      </div>
-      <div class="shelf rise" id="film-shelf">
-        <div class="shelf-head"><span class="kicker">Film / Now showing</span><span class="kicker">Seven favorites<span class="swipe"> / swipe &rarr;</span></span></div>
-        <ul class="posters">
-          <li class="poster"><figure><div class="poster-frame"><img src="films/tokyo-story.jpg" alt="Tokyo Story poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">01</span><b>Tokyo Story</b><small>1953 / Yasujiro Ozu</small></figcaption></figure></li>
-          <li class="poster"><figure><div class="poster-frame"><img src="films/fantastic-mr-fox.jpg" alt="Fantastic Mr. Fox poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">02</span><b>Fantastic Mr. Fox</b><small>2009 / Wes Anderson</small></figcaption></figure></li>
-          <li class="poster"><figure><div class="poster-frame"><img src="films/perfect-days.jpg" alt="Perfect Days poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">03</span><b>Perfect Days</b><small>2023 / Wim Wenders</small></figcaption></figure></li>
-          <li class="poster"><figure><div class="poster-frame"><img src="films/the-last-10-years.jpg" alt="The Last 10 Years poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">04</span><b>The Last 10 Years</b><small>2022 / Michihito Fujii</small></figcaption></figure></li>
-          <li class="poster"><figure><div class="poster-frame"><img src="films/kill-bill-vol-1.jpg" alt="Kill Bill: Vol. 1 poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">05</span><b>Kill Bill: Vol. 1</b><small>2003 / Quentin Tarantino</small></figcaption></figure></li>
-          <li class="poster"><figure><div class="poster-frame"><img src="films/slumdog-millionaire.jpg" alt="Slumdog Millionaire poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">06</span><b>Slumdog Millionaire</b><small>2008 / Danny Boyle</small></figcaption></figure></li>
-          <li class="poster"><figure><div class="poster-frame"><img src="films/everything-everywhere-all-at-once.jpg" alt="Everything Everywhere All at Once poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><span class="pn">07</span><b>Everything Everywhere All at Once</b><small>2022 / Daniel Kwan, Daniel Scheinert</small></figcaption></figure></li>
-        </ul>
       </div>
     </div>
   </section>
@@ -607,7 +612,12 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   var rises = Array.prototype.slice.call(document.querySelectorAll(".rise"));
   var scenes = Array.prototype.slice.call(document.querySelectorAll("[data-scene]"));
   var navLinks = Array.prototype.slice.call(document.querySelectorAll("nav a"));
-  var words = Array.prototype.slice.call(document.querySelectorAll(".words li"));
+  var words = Array.prototype.slice.call(document.querySelectorAll(".words > li"));
+  var capCard = document.querySelector(".caption-card"), filmNow = document.getElementById("film-now");
+  Array.prototype.forEach.call(document.querySelectorAll(".cf"), function (b) {
+    function show() { filmNow.textContent = b.getAttribute("data-film"); }
+    b.addEventListener("mouseenter", show); b.addEventListener("focus", show); b.addEventListener("click", show);
+  });
   var capN = document.getElementById("cap-n"), capT = document.getElementById("cap-t"), capP = document.getElementById("cap-p");
   var plate = document.getElementById("nameplate");
   var n = pages.length, active = -1, activeWord = -1, ticking = false;
@@ -646,6 +656,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     capN.textContent = "No. " + pad(i + 1) + " of " + pad(words.length);
     capT.textContent = words[i].querySelector(".w").textContent;
     capP.textContent = words[i].getAttribute("data-cap");
+    capCard.classList.toggle("is-film", words[i].querySelector(".w").textContent.trim() === "Film");
   }
   function frame() {
     ticking = false;
