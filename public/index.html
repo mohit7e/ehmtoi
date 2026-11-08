@@ -142,7 +142,12 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .page { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 40px; align-content: start;
   opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; visibility: hidden; }
 .page.on { opacity: 1; transform: none; visibility: visible; }
-.page-head { grid-column: 1 / -1; display: grid; gap: 10px; }
+.page-head { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: start; }
+.page-head > :not(.logo-tile) { grid-column: 1; }
+.logo-tile { grid-column: 2; grid-row: 1 / span 3; width: 104px; height: 104px; padding: 6px; background: var(--glass); border: 1px solid var(--edge); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.logo-tile img { display: block; width: 100%; height: 100%; object-fit: cover; background: #fff; }
+.logo-tile.pad img { object-fit: contain; padding: 14px; }
+@media (max-width: 760px) { .logo-tile { width: 64px; height: 64px; padding: 4px; } .logo-tile.pad img { padding: 8px; } }
 .page .co { font-size: clamp(2.4rem, 6.4vw, 5.6rem); line-height: 0.88; letter-spacing: -0.045em; text-transform: uppercase; overflow-wrap: anywhere; }
 .page .role { font-size: clamp(1.1rem, 1.8vw, 1.45rem); }
 .page .meta { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -429,7 +434,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
             <article class="page on">
               <div class="page-head">
                 <div class="meta"><span class="status live">Currently</span><span class="kicker">Aug 2026 - Feb 2027</span></div>
-                <h3 class="co">Johnson &amp; Johnson</h3>
+                <span class="logo-tile fill"><img src="logos/jnj.png" alt="Johnson &amp; Johnson logo" width="160" height="160" loading="lazy" decoding="async"></span><h3 class="co">Johnson &amp; Johnson</h3>
                 <p class="role">Global Transportation Co-Op</p>
               </div>
               <div class="plate glass"><ol>
@@ -443,7 +448,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
             <article class="page">
               <div class="page-head">
                 <div class="meta"><span class="status">Delivered</span><span class="kicker">Jun - Aug 2026</span></div>
-                <h3 class="co">Tiffany &amp; Co.</h3>
+                <span class="logo-tile fill"><img src="logos/tiffany.png" alt="Tiffany &amp; Co. logo" width="160" height="160" loading="lazy" decoding="async"></span><h3 class="co">Tiffany &amp; Co.</h3>
                 <p class="role">IT Supply Chain Systems Intern</p>
               </div>
               <div class="plate glass"><ol>
@@ -455,7 +460,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
             <article class="page">
               <div class="page-head">
                 <div class="meta"><span class="status">Delivered</span><span class="kicker">AI engineering</span></div>
-                <h3 class="co">Ebix</h3>
+                <span class="logo-tile pad"><img src="logos/ebix.svg" alt="Ebix logo" width="160" height="160" loading="lazy" decoding="async"></span><h3 class="co">Ebix</h3>
                 <p class="role">AI Software Engineer Consultant</p>
               </div>
               <div class="plate glass"><ol>
@@ -467,7 +472,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
             <article class="page">
               <div class="page-head">
                 <div class="meta"><span class="status">Delivered</span><span class="kicker">Two terms</span></div>
-                <h3 class="co">Zinnia</h3>
+                <span class="logo-tile fill"><img src="logos/zinnia.png" alt="Zinnia logo" width="160" height="160" loading="lazy" decoding="async"></span><h3 class="co">Zinnia</h3>
                 <p class="role">Software Engineer Intern</p>
               </div>
               <div class="plate glass"><ol>
