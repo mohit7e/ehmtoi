@@ -212,7 +212,7 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .words .no { font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .words .w { font-size: clamp(2rem, 5.6vw, 5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.045em; line-height: 1; padding-block: 6px;
   color: transparent; -webkit-text-stroke: 1px var(--rule); transition: color .45s ease, -webkit-text-stroke-color .45s ease, transform .45s ease; transform-origin: left center; }
-.words > li.on .w, .words > li:hover .w { color: var(--fg); -webkit-text-stroke-color: var(--fg); }
+.words > li.on .w { color: var(--fg); -webkit-text-stroke-color: var(--fg); }
 .words > li.on .w { transform: translateX(10px); }
 .caption-card { position: sticky; }
 .expand-btn { all: unset; cursor: pointer; position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; display: grid; place-items: center; font-size: 1.35rem; font-weight: 300; line-height: 1; color: var(--fg); border: 1px solid var(--rule); background: var(--glass-strong); transition: background .25s, color .25s, transform .25s; }
@@ -853,7 +853,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       window.scrollTo({ top: top, behavior: mq.matches ? "auto" : "smooth" });
     });
   });
-  words.forEach(function (w, i) { w.addEventListener("mouseenter", function () { if (!shelfOpen) setWord(i); }); });
   // Leaving via the top bar closes the shelf so navigation works normally
   Array.prototype.forEach.call(document.querySelectorAll(".bar a"), function (a) {
     a.addEventListener("click", function () { if (shelfOpen) setOpen(false); });
