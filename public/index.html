@@ -253,6 +253,8 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .lb-timer i { display: block; height: 100%; background: var(--fg); transform-origin: left; }
 .lb-toast.show .lb-timer i { animation: introTimer 5s linear forwards; }
 @media (prefers-reduced-motion: reduce) { .lb-toast { transition: none; } .lb-toast.show .lb-timer i { animation: none; } }
+html.shelf-lock { overflow: hidden; }
+html.shelf-lock body { overscroll-behavior: none; }
 .card-films { display: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
 .card-films.show { display: grid; }
 .card-films[data-for="Art"] { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
@@ -744,6 +746,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   function setOpen(open) {
     shelfOpen = open && showShelf(curName);
     pshelf.hidden = !shelfOpen;
+    root.classList.toggle("shelf-lock", shelfOpen);
     expandBtn.textContent = shelfOpen ? "\u2212" : "+";
     expandBtn.setAttribute("aria-expanded", shelfOpen ? "true" : "false");
     expandBtn.setAttribute("aria-label", shelfOpen ? "Close shelf" : "Open shelf");
@@ -833,7 +836,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     }
     var best = 0, bestD = Infinity;
     words.forEach(function (w, k) { var b = w.getBoundingClientRect(); var d = Math.abs(b.top + b.height / 2 - vh * 0.5); if (d < bestD) { bestD = d; best = k; } });
-    setWord(best);
+    if (!shelfOpen) setWord(best);
     var current = "top";
     scenes.forEach(function (s) { if (s.getBoundingClientRect().top < vh * 0.45) current = s.id; });
     if (body.dataset.scene !== current) {
@@ -850,7 +853,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       window.scrollTo({ top: top, behavior: mq.matches ? "auto" : "smooth" });
     });
   });
-  words.forEach(function (w, i) { w.addEventListener("mouseenter", function () { setWord(i); }); });
+  words.forEach(function (w, i) { w.addEventListener("mouseenter", function () { if (!shelfOpen) setWord(i); }); });
+  // Leaving via the top bar closes the shelf so navigation works normally
+  Array.prototype.forEach.call(document.querySelectorAll(".bar a"), function (a) {
+    a.addEventListener("click", function () { if (shelfOpen) setOpen(false); });
+  });
   Array.prototype.forEach.call(document.querySelectorAll(".view-shelf"), function (btn) {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
