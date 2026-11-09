@@ -243,6 +243,16 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .view-shelf:focus-visible, .ps-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .words > li .cap, .words > li .m-films { grid-column: 2 / -1; }
 @media (max-width: 1040px) { .view-shelf { display: none; } }
+.lb-toast { position: fixed; z-index: 25; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); width: min(340px, calc(100% - 32px)); padding: 16px 40px 14px 18px; display: grid; gap: 8px; background: var(--glass-strong); box-shadow: 0 20px 44px -24px rgba(16, 26, 24, 0.4); font-size: 0.86rem; line-height: 1.45; color: var(--muted); pointer-events: none; opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
+.lb-toast.show { opacity: 1; transform: none; pointer-events: auto; }
+.lb-toast a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--fg); }
+.lb-toast a:hover { color: var(--accent); border-color: var(--accent); }
+.lb-x { all: unset; cursor: pointer; position: absolute; top: 6px; right: 8px; width: 26px; height: 26px; display: grid; place-items: center; font-size: 1.1rem; color: var(--fg); }
+.lb-x:focus-visible { outline: 2px solid var(--accent); }
+.lb-timer { height: 1px; background: var(--rule); overflow: hidden; margin-top: 2px; }
+.lb-timer i { display: block; height: 100%; background: var(--fg); transform-origin: left; }
+.lb-toast.show .lb-timer i { animation: introTimer 5s linear forwards; }
+@media (prefers-reduced-motion: reduce) { .lb-toast { transition: none; } .lb-toast.show .lb-timer i { animation: none; } }
 .card-films { display: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
 .card-films.show { display: grid; }
 .card-films[data-for="Art"] { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
@@ -688,6 +698,13 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     </div>
 </div>
 
+<aside class="lb-toast glass" id="lb-toast" role="status" aria-live="polite" hidden>
+  <button type="button" class="lb-x" id="lb-x" aria-label="Dismiss">&times;</button>
+  <p>Curious about the Lookbook projects? Reach out through any of the <a href="#contact">contact links</a> for in-depth details.</p>
+  <p>Looking for something more playful? Browse my <a href="projects/index.html">Random Projects</a>.</p>
+  <div class="lb-timer" aria-hidden="true"><i></i></div>
+</aside>
+
 <div class="intro-veil" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
   <div class="intro-card glass" tabindex="-1">
     <button class="intro-x" id="intro-x" type="button" aria-label="Close">&times;</button>
@@ -786,6 +803,22 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     if (shelfOpen) { if (any) showShelf(nm); else setOpen(false); }
     filmNow.textContent = nm === "Film" ? "Hover a poster" : nm === "Fashion" ? "Hover a designer" : nm === "Art" ? "Hover a work" : "Hover a cover";
   }
+  var toast = document.getElementById("lb-toast"), toastShown = false, toastT, toastHideT;
+  function showToast() {
+    if (toastShown) return;
+    toastShown = true;
+    clearTimeout(toastHideT);
+    toast.hidden = false;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { toast.classList.add("show"); }); });
+    toastT = setTimeout(hideToast, 5000);
+  }
+  function hideToast() {
+    clearTimeout(toastT);
+    if (toast.hidden) return;
+    toast.classList.remove("show");
+    toastHideT = setTimeout(function () { toast.hidden = true; }, 360);
+  }
+  document.getElementById("lb-x").addEventListener("click", hideToast);
   function frame() {
     ticking = false;
     var vh = window.innerHeight, y = window.scrollY, max = root.scrollHeight - vh;
@@ -807,6 +840,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     scenes.forEach(function (s) { if (s.getBoundingClientRect().top < vh * 0.45) current = s.id; });
     if (body.dataset.scene !== current) {
       body.dataset.scene = current;
+      if (current === "projects") showToast(); else hideToast();
       navLinks.forEach(function (a) { a.classList.toggle("on", a.dataset.for === current); });
     }
   }
