@@ -805,8 +805,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   }
   var toast = document.getElementById("lb-toast"), toastShown = false, toastT, toastHideT;
   function showToast() {
-    if (toastShown) return;
-    toastShown = true;
     clearTimeout(toastHideT);
     toast.hidden = false;
     requestAnimationFrame(function () { requestAnimationFrame(function () { toast.classList.add("show"); }); });
