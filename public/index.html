@@ -19,6 +19,7 @@
   --rule: rgba(16, 26, 24, 0.18);
   --hair: rgba(16, 26, 24, 0.09);
   --accent: #0B6B5A;
+  --mat: #F3F2EE;
   --transit: #B4741A;
   --b1: #4FC7B0; --b2: #F2C46D; --b3: #7FB3E8;
   --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -30,7 +31,7 @@
   --glass: rgba(255, 255, 255, 0.07); --glass-strong: rgba(255, 255, 255, 0.13);
   --edge: rgba(255, 255, 255, 0.15);
   --rule: rgba(255, 255, 255, 0.22); --hair: rgba(255, 255, 255, 0.09);
-  --accent: #63D2BA; --transit: #EDB458;
+  --accent: #63D2BA; --mat: #1A2220; --transit: #EDB458;
   --b1: #0F7A68; --b2: #8A5A12; --b3: #1F4F86;
   color-scheme: dark;
 }
@@ -215,6 +216,9 @@ nav a.on { color: var(--fg); border-bottom-color: var(--fg); }
 .words > li.on .w { transform: translateX(10px); }
 .card-films { display: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
 .card-films.show { display: grid; }
+.card-films[data-for="Art"] { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cf.art img, .poster.art .poster-frame img { aspect-ratio: 1; object-fit: contain; background: var(--mat); padding: 6px; }
+.poster.art { flex-basis: min(190px, 52vw); }
 .card-films[data-for="Fashion"] { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .cf { all: unset; cursor: pointer; display: block; padding: 4px; background: var(--glass-strong); border: 1px solid var(--edge); animation: popIn .55s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0ms); transition: transform .3s ease; }
 .cf img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
@@ -526,7 +530,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       <div class="index">
         <ol class="words">
           <li data-cap="Style as design you wear. Silhouettes, fabrics and how a look comes together. Designers I admire:"><span class="no">01</span><span class="w">Fashion</span><span class="cap">Style as design you wear. Silhouettes, fabrics and how a look comes together. Designers I admire below.</span><ul class="posters m-films" aria-label="Designers I admire"><li class="poster"><figure><div class="poster-frame"><img src="fashion/jonathan-anderson.jpg" alt="Jonathan Anderson" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Jonathan Anderson</b><small>Designer / JW Anderson</small></figcaption></figure></li><li class="poster"><figure><div class="poster-frame"><img src="fashion/vivienne-westwood.jpg" alt="Vivienne Westwood" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Vivienne Westwood</b><small>Designer</small></figcaption></figure></li><li class="poster"><figure><div class="poster-frame"><img src="fashion/yohji-yamamoto.jpg" alt="Yohji Yamamoto" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Yohji Yamamoto</b><small>Designer</small></figcaption></figure></li><li class="poster"><figure><div class="poster-frame"><img src="fashion/yves-saint-laurent.jpg" alt="Yves Saint Laurent" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Yves Saint Laurent</b><small>Designer / Saint Laurent</small></figcaption></figure></li><li class="poster"><figure><div class="poster-frame"><img src="fashion/tom-ford.jpg" alt="Tom Ford" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Tom Ford</b><small>Designer</small></figcaption></figure></li></ul></li>
-          <li data-cap="Galleries, color and composition. Anything that makes you look twice."><span class="no">02</span><span class="w">Art</span><span class="cap">Galleries, color and composition. Anything that makes you look twice.</span></li>
+          <li data-cap="Galleries, color and composition. Anything that makes you look twice. Works I keep coming back to:"><span class="no">02</span><span class="w">Art</span><span class="cap">Galleries, color and composition. Anything that makes you look twice. A few favorite works below.</span><ul class="posters m-films" aria-label="Favorite artworks"><li class="poster art"><figure><div class="poster-frame"><img src="art/the-lovers.jpg" alt="The Lovers by René Magritte" loading="lazy" decoding="async"></div><figcaption><b>The Lovers</b><small>René Magritte / 1928</small></figcaption></figure></li><li class="poster art"><figure><div class="poster-frame"><img src="art/the-death-of-socrates.jpg" alt="The Death of Socrates by Jacques-Louis David" loading="lazy" decoding="async"></div><figcaption><b>The Death of Socrates</b><small>Jacques-Louis David / 1787</small></figcaption></figure></li><li class="poster art"><figure><div class="poster-frame"><img src="art/wanderer-above-the-sea-of-fog.jpg" alt="Wanderer Above the Sea of Fog by Caspar David Friedrich" loading="lazy" decoding="async"></div><figcaption><b>Wanderer Above the Sea of Fog</b><small>Caspar David Friedrich / 1818</small></figcaption></figure></li><li class="poster art"><figure><div class="poster-frame"><img src="art/the-garden-of-earthly-delights.jpg" alt="The Garden of Earthly Delights by Hieronymus Bosch" loading="lazy" decoding="async"></div><figcaption><b>The Garden of Earthly Delights</b><small>Hieronymus Bosch / 1490 - 1510</small></figcaption></figure></li><li class="poster art"><figure><div class="poster-frame"><img src="art/all-is-vanity.jpg" alt="All Is Vanity by Charles Allan Gilbert" loading="lazy" decoding="async"></div><figcaption><b>All Is Vanity</b><small>Charles Allan Gilbert / 1892</small></figcaption></figure></li><li class="poster art"><figure><div class="poster-frame"><img src="art/the-voyage-of-life.jpg" alt="The Voyage of Life by Thomas Cole" loading="lazy" decoding="async"></div><figcaption><b>The Voyage of Life</b><small>Thomas Cole / 1842</small></figcaption></figure></li></ul></li>
           <li data-cap="New cities, new food, and seeing how other places move people and goods."><span class="no">03</span><span class="w">Travel</span><span class="cap">New cities, new food, and seeing how other places move people and goods.</span></li>
           <li data-cap="Stories told through framing, sound and pacing. A few favorites:"><span class="no">04</span><span class="w">Film</span><span class="cap">Stories told through framing, sound and pacing. A few favorites below.</span><ul class="posters m-films" aria-label="Favorite films"><li class="poster"><figure><div class="poster-frame"><img src="films/tokyo-story.jpg" alt="Tokyo Story poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Tokyo Story</b><small>1953 / Yasujiro Ozu</small></figcaption></figure></li>
 <li class="poster"><figure><div class="poster-frame"><img src="films/fantastic-mr-fox.jpg" alt="Fantastic Mr. Fox poster" width="480" height="720" loading="lazy" decoding="async"></div><figcaption><b>Fantastic Mr. Fox</b><small>2009 / Wes Anderson</small></figcaption></figure></li>
@@ -548,6 +552,14 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
             <button type="button" class="cf" style="--d:110ms" data-film="Yohji Yamamoto"><img src="fashion/yohji-yamamoto.jpg" alt="Yohji Yamamoto" width="480" height="720" loading="lazy" decoding="async"></button>
             <button type="button" class="cf" style="--d:165ms" data-film="Yves Saint Laurent / Saint Laurent"><img src="fashion/yves-saint-laurent.jpg" alt="Yves Saint Laurent" width="480" height="720" loading="lazy" decoding="async"></button>
             <button type="button" class="cf" style="--d:220ms" data-film="Tom Ford"><img src="fashion/tom-ford.jpg" alt="Tom Ford" width="480" height="720" loading="lazy" decoding="async"></button>
+          </div>
+          <div class="card-films" data-for="Art" aria-label="Favorite artworks">
+            <button type="button" class="cf art" style="--d:0ms" data-film="The Lovers / René Magritte / 1928"><img src="art/the-lovers.jpg" alt="The Lovers by René Magritte" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf art" style="--d:55ms" data-film="The Death of Socrates / Jacques-Louis David / 1787"><img src="art/the-death-of-socrates.jpg" alt="The Death of Socrates by Jacques-Louis David" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf art" style="--d:110ms" data-film="Wanderer Above the Sea of Fog / Caspar David Friedrich / 1818"><img src="art/wanderer-above-the-sea-of-fog.jpg" alt="Wanderer Above the Sea of Fog by Caspar David Friedrich" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf art" style="--d:165ms" data-film="The Garden of Earthly Delights / Hieronymus Bosch / 1490 - 1510"><img src="art/the-garden-of-earthly-delights.jpg" alt="The Garden of Earthly Delights by Hieronymus Bosch" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf art" style="--d:220ms" data-film="All Is Vanity / Charles Allan Gilbert / 1892"><img src="art/all-is-vanity.jpg" alt="All Is Vanity by Charles Allan Gilbert" loading="lazy" decoding="async"></button>
+            <button type="button" class="cf art" style="--d:275ms" data-film="The Voyage of Life / Thomas Cole / 1842"><img src="art/the-voyage-of-life.jpg" alt="The Voyage of Life by Thomas Cole" loading="lazy" decoding="async"></button>
           </div>
           <div class="card-films" data-for="Film" aria-label="Favorite films">
             <button type="button" class="cf" style="--d:0ms" data-film="Tokyo Story / 1953 / Yasujiro Ozu"><img src="films/tokyo-story.jpg" alt="Tokyo Story poster" width="480" height="720" loading="lazy" decoding="async"></button>
@@ -679,7 +691,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       var on = sh.getAttribute("data-for") === nm; sh.classList.toggle("show", on); if (on) any = true;
     });
     capCard.classList.toggle("is-film", any);
-    filmNow.textContent = nm === "Film" ? "Hover a poster" : nm === "Fashion" ? "Hover a designer" : "Hover a cover";
+    filmNow.textContent = nm === "Film" ? "Hover a poster" : nm === "Fashion" ? "Hover a designer" : nm === "Art" ? "Hover a work" : "Hover a cover";
   }
   function frame() {
     ticking = false;
