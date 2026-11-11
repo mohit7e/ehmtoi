@@ -820,6 +820,23 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     toastHideT = setTimeout(function () { toast.hidden = true; }, 360);
   }
   document.getElementById("lb-x").addEventListener("click", hideToast);
+  // Map scroll progress through the passions list to a passion, so arriving at the
+  // top of the section always starts on the first one
+  var wordsList = document.querySelector(".words"), passionsSec = document.getElementById("passions");
+  // t = 0 when the section's top meets the top bar, t = 1 when the list's bottom reaches 40% of the screen
+  function listGeom() {
+    var vh = window.innerHeight, bar = 72, sec = passionsSec.getBoundingClientRect(), r = wordsList.getBoundingClientRect();
+    var span = Math.max(1, bar + (r.bottom - sec.top) - vh * 0.4);
+    return { secTop: sec.top, bar: bar, span: span };
+  }
+  function wordFromScroll() {
+    var g = listGeom(), t = (g.bar - g.secTop) / g.span;
+    return Math.max(0, Math.min(words.length - 1, Math.floor(t * words.length)));
+  }
+  function scrollToWord(i) {
+    var g = listGeom(), want = g.bar - ((i + 0.5) / words.length) * g.span;
+    window.scrollBy({ top: g.secTop - want, behavior: "auto" });
+  }
   function frame() {
     ticking = false;
     var vh = window.innerHeight, y = window.scrollY, max = root.scrollHeight - vh;
@@ -834,9 +851,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       hs.style.setProperty("--hsp", hp.toFixed(3));
       rises.forEach(function (el) { el.style.setProperty("--r", clamp((vh - el.getBoundingClientRect().top) / (vh * 0.45)).toFixed(3)); });
     }
-    var best = 0, bestD = Infinity;
-    words.forEach(function (w, k) { var b = w.getBoundingClientRect(); var d = Math.abs(b.top + b.height / 2 - vh * 0.5); if (d < bestD) { bestD = d; best = k; } });
-    if (!shelfOpen) setWord(best);
+    if (!shelfOpen) setWord(wordFromScroll());
     var current = "top";
     scenes.forEach(function (s) { if (s.getBoundingClientRect().top < vh * 0.45) current = s.id; });
     if (body.dataset.scene !== current) {
@@ -860,8 +875,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   Array.prototype.forEach.call(document.querySelectorAll(".view-shelf"), function (btn) {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
-      var li = btn.closest("li"), i = words.indexOf(li), b = li.querySelector(".w").getBoundingClientRect();
-      window.scrollBy({ top: b.top + b.height / 2 - window.innerHeight * 0.5, behavior: "auto" });
+      var li = btn.closest("li"), i = words.indexOf(li);
+      scrollToWord(i);
       setWord(i); setOpen(true);
     });
   });
